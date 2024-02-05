@@ -69,7 +69,7 @@ if(INTERNAL_BUILD_DEV)
 endif()
 
 install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
     DESTINATION include/
 )
 
@@ -99,19 +99,8 @@ install(
     DESTINATION lib/cmake/${PROJECT_NAME}
 )
 
-set(ReflectionExec "VEngineHeaderGen")
-set(Reflection_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
-add_executable(${ReflectionExec} ${Reflection_SOURCES})
-target_include_directories(${ReflectionExec}
-    PRIVATE
-    "$<TARGET_PROPERTY:${PROJECT_NAME},INTERFACE_INCLUDE_DIRECTORIES>"
-)
-
-add_custom_target(ReflectHeaders
-    COMMAND ${ReflectionExec} -s ${CMAKE_CURRENT_SOURCE_DIR}/include -o ${CMAKE_CURRENT_SOURCE_DIR}/include/generated
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Reflect vengine headers"
-    SOURCES ${Reflection_SOURCES}
-)
-
-add_dependencies(${PROJECT_NAME} ReflectHeaders)
+if(CMAKE_BUILD_TYPE)
+message(STATUS "BUILD TYPE SET")
+else()
+message(STATUS "BUILD NOT TYPE SET")
+endif()
