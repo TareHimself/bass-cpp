@@ -1,0 +1,100 @@
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
+include(${CMAKE_CURRENT_SOURCE_DIR}/utils.cmake)
+
+
+project(bassCpp VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
+
+option(INTERNAL_BUILD_DEV "Build dev executable" OFF)
+file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" )
+
+file(GLOB_RECURSE INCLUDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp" )
+
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${INCLUDE_FILES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
+
+set(BASS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/native)
+
+list(APPEND CMAKE_PREFIX_PATH ${BASS_DIR})
+
+DownloadBass(${BASS_DIR})
+
+find_path(BASS_AUDIO_H bass.h)
+find_library(BASS_AUDIO_LIB bass)
+target_include_directories(
+    ${PROJECT_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include> 
+)
+target_include_directories(
+    ${PROJECT_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${BASS_AUDIO_H}>
+    $<INSTALL_INTERFACE:include> 
+)
+
+
+get_filename_component(BASS_AUDIO_LIB_NAME ${BASS_AUDIO_LIB} NAME)
+
+if(WIN32)
+    # set_target_properties(${PROJECT_NAME} PROPERTIES
+    #     IMPORTED_IMPLIB_DEBUG "${_IMPORT_PREFIX}/lib/bassCpp.lib"
+    #     IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/bin/bassCpp.dll"
+    # )
+    set_property(TARGET ${PROJECT_NAME} PROPERTY IMPORTED_LOCATION 
+        $<BUILD_INTERFACE:${BASS_DIR}/bass.dll>
+        $<INSTALL_INTERFACE:bin/bass.dll>
+    )
+
+    install(
+        FILES ${BASS_DIR}/bass.dll
+        DESTINATION bin
+    )
+endif()
+
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC 
+    $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
+    $<INSTALL_INTERFACE:lib/${BASS_AUDIO_LIB_NAME}>
+    )
+
+if(INTERNAL_BUILD_DEV)
+    add_executable(Test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+    target_link_libraries(Test ${PROJECT_NAME})
+endif()
+
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DESTINATION include/
+)
+
+install(
+    FILES ${BASS_AUDIO_H}/bass.h
+    DESTINATION include/
+)
+
+install(
+    FILES ${BASS_AUDIO_LIB}
+    DESTINATION lib
+)
+
+install(
+    TARGETS bassCpp
+    EXPORT bassCpp-targets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+)
+
+install(
+    EXPORT bassCpp-targets
+    FILE bassCppConfig.cmake
+    NAMESPACE bassCpp::
+    DESTINATION lib/cmake/bassCpp
+)
