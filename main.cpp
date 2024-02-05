@@ -1,7 +1,6 @@
 
 
 #include <iostream>
-
 #include "bass/Bass.hpp"
 #include "bass/Stream.hpp"
 using namespace std::chrono_literals;

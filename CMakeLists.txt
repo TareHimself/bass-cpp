@@ -7,11 +7,12 @@ SET(CMAKE_CXX_STANDARD_LIBRARIES "")
 project(basscpp VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
 
 option(INTERNAL_BUILD_DEV "Build dev executable" OFF)
+
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" )
 
 file(GLOB_RECURSE INCLUDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp" )
 
-add_library(${PROJECT_NAME} INTERFACE ${INCLUDE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES} ${INCLUDE_FILES})
 
 #set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
 
@@ -25,43 +26,49 @@ DownloadBass(${BASS_DIR})
 
 find_path(BASS_AUDIO_H bass.h)
 find_library(BASS_AUDIO_LIB bass)
+
 target_include_directories(
     ${PROJECT_NAME}
-    INTERFACE
+    PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include> 
 )
+
 target_include_directories(
     ${PROJECT_NAME}
-    INTERFACE
+    PUBLIC
     $<BUILD_INTERFACE:${BASS_AUDIO_H}>
     $<INSTALL_INTERFACE:include> 
 )
 
+target_link_libraries(${PROJECT_NAME} PRIVATE ${BASS_AUDIO_LIB})
 
-get_filename_component(BASS_AUDIO_LIB_NAME ${BASS_AUDIO_LIB} NAME)
 
-if(WIN32)
-    # set_target_properties(${PROJECT_NAME} PROPERTIES
-    #     IMPORTED_IMPLIB_DEBUG "${_IMPORT_PREFIX}/lib/bassCpp.lib"
-    #     IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/bin/bassCpp.dll"
-    # )
-    set_property(TARGET ${PROJECT_NAME} PROPERTY IMPORTED_LOCATION 
-        $<BUILD_INTERFACE:${BASS_DIR}/bass.dll>
-        $<INSTALL_INTERFACE:bin/bass.dll>
-    )
+# get_filename_component(BASS_AUDIO_LIB_NAME ${BASS_AUDIO_LIB} NAME)
 
-    install(
-        FILES ${BASS_DIR}/bass.dll
-        DESTINATION bin
-    )
-endif()
+# if(WIN32)
+#     # set_target_properties(${PROJECT_NAME} PROPERTIES
+#     #     IMPORTED_IMPLIB_DEBUG "${_IMPORT_PREFIX}/lib/bassCpp.lib"
+#     #     IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/bin/bassCpp.dll"
+#     # )
+#     set_property(TARGET ${PROJECT_NAME} 
+#         PROPERTY 
+#         IMPORTED_LOCATION 
+#         $<BUILD_INTERFACE:${BASS_DIR}/bass>
+#         $<INSTALL_INTERFACE:bin/bass>
+#     )
 
-target_link_libraries(${PROJECT_NAME} 
-    INTERFACE
-    $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
-    $<INSTALL_INTERFACE:lib/${BASS_AUDIO_LIB_NAME}>
-    )
+#     install(
+#         FILES ${BASS_DIR}/bass.dll
+#         DESTINATION bin
+#     )
+# endif()
+# message(STATUS "LIB NAME ${BASS_AUDIO_LIB_NAME}")
+# target_link_libraries(${PROJECT_NAME} 
+#     INTERFACE
+#     $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
+#     $<INSTALL_INTERFACE:lib/bass>
+# )
 
 if(INTERNAL_BUILD_DEV)
     add_executable(Test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
@@ -78,10 +85,12 @@ install(
     DESTINATION include/
 )
 
-install(
-    FILES ${BASS_AUDIO_LIB}
-    DESTINATION lib
-)
+if(WIN32)
+    install(
+        FILES ${BASS_DIR}/bass.dll
+        DESTINATION bin
+    )
+endif()
 
 install(
     TARGETS ${PROJECT_NAME}
@@ -98,9 +107,3 @@ install(
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION lib/cmake/${PROJECT_NAME}
 )
-
-if(CMAKE_BUILD_TYPE)
-message(STATUS "BUILD TYPE SET")
-else()
-message(STATUS "BUILD NOT TYPE SET")
-endif()
