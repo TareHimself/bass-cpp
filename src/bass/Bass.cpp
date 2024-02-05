@@ -4,7 +4,7 @@
 
 namespace bass
 {
-    bool init(const int device, const DWORD sampleRate, const DWORD flags, const WindowHandle window)
+    /*bool init(const int device, const DWORD sampleRate, const DWORD flags, const WindowHandle window)
     {
         return  BASS_Init(device,sampleRate,flags,window,nullptr) == TRUE;
     }
@@ -105,5 +105,5 @@ namespace bass
         }
 
         return devices;
-    }
+    }*/
 }

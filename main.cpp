@@ -19,7 +19,7 @@ int main()
         //     }
         // }
         bass::init(-1, 44100, 0, nullptr);
-        if(const auto sample = bass::createFileStream(R"(D:\Github\vengine\test\audio\tokyo lofi hiphop.wav)",0,bass::CreateSampleFloat | bass::CreateSampleMono); sample->Play())
+        if(const auto sample = bass::createFileStream(R"(D:\BH & Kirk Cosier - Slipping Away (ft. Cheney).wav)",0,bass::CreateSampleFloat | bass::CreateSampleMono); sample->Play())
         {
             sample->SetAttribute(bass::AttributeVolume,0.1f);
             while(true)

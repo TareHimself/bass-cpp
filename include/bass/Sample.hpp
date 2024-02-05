@@ -1,12 +1,10 @@
 ﻿#pragma once
 #include <filesystem>
-
-#include "types.hpp"
+#include "Channel.hpp"
+#include "utils.hpp"
 
 namespace bass
 {
-    class Channel;
-
     class Sample
     {
         
@@ -14,20 +12,54 @@ namespace bass
     public:
         
 
-        Sample(DWORD handle);
-        Channel* GetChannel(bool bCreateNew = true) const;
+        // Sample(DWORD handle);
+        // Channel* GetChannel(bool bCreateNew = true) const;
+        Sample(DWORD handle)
+        {
+            _handle = handle;
+        }
+
+        Channel* GetChannel(const bool bCreateNew) const
+        {
+            if(const auto handle  = BASS_SampleGetChannel(_handle,bCreateNew ? BASS_SAMCHAN_NEW : 0))
+            {
+                return new Channel(handle);
+            }
+        
+            return throwOrReturn(nullptr);
+        }
     };
 
-    Sample * createSample(const void * data,QWORD offset = 0,DWORD length = 0,DWORD max = 0,DWORD flags = 0);
+    
+    inline Sample* createSample(const void* data, const QWORD offset, const DWORD length, const DWORD max, const DWORD flags)
+    {
+        if(const auto sample = BASS_SampleLoad(true,data,offset,length,max,flags))
+        {
+            return new Sample(sample);
+        }
 
+        return throwOrReturn(nullptr);
+    }
+    
     class FileSample : public Sample
     {
         std::filesystem::path _file;
     public:
-        FileSample(const std::filesystem::path& file,DWORD handle);
+        FileSample(const std::filesystem::path& file, DWORD handle) : Sample(handle)
+        {
+            _file = file;
+        }
     };
 
     
     
-    FileSample * createFileSample(const std::filesystem::path& file,DWORD offset = 0,DWORD length = 0,DWORD max = 0,DWORD flags = 0);
+    inline FileSample* createFileSample(const std::filesystem::path& file, const DWORD offset, const DWORD length, const DWORD max, const DWORD flags)
+    {
+        if(const auto sample = BASS_SampleLoad(false,file.c_str(),offset,length,max,flags))
+        {
+            return new FileSample(file,sample);
+        }
+
+        return throwOrReturn(nullptr);
+    }
 }

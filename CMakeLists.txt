@@ -3,17 +3,17 @@ set(CMAKE_CXX_STANDARD 20)
 #set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
 include(${CMAKE_CURRENT_SOURCE_DIR}/utils.cmake)
 
-
-project(bassCpp VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
+SET(CMAKE_CXX_STANDARD_LIBRARIES "")
+project(basscpp VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
 
 option(INTERNAL_BUILD_DEV "Build dev executable" OFF)
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" )
 
 file(GLOB_RECURSE INCLUDE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp" )
 
-add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${INCLUDE_FILES})
+add_library(${PROJECT_NAME} INTERFACE ${INCLUDE_FILES})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
+#set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
 
@@ -27,13 +27,13 @@ find_path(BASS_AUDIO_H bass.h)
 find_library(BASS_AUDIO_LIB bass)
 target_include_directories(
     ${PROJECT_NAME}
-    PUBLIC
+    INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include> 
 )
 target_include_directories(
     ${PROJECT_NAME}
-    PUBLIC
+    INTERFACE
     $<BUILD_INTERFACE:${BASS_AUDIO_H}>
     $<INSTALL_INTERFACE:include> 
 )
@@ -58,7 +58,7 @@ if(WIN32)
 endif()
 
 target_link_libraries(${PROJECT_NAME} 
-    PUBLIC 
+    INTERFACE
     $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
     $<INSTALL_INTERFACE:lib/${BASS_AUDIO_LIB_NAME}>
     )
@@ -69,7 +69,7 @@ if(INTERNAL_BUILD_DEV)
 endif()
 
 install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
     DESTINATION include/
 )
 
@@ -84,8 +84,8 @@ install(
 )
 
 install(
-    TARGETS bassCpp
-    EXPORT bassCpp-targets
+    TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
     RUNTIME DESTINATION bin
@@ -93,8 +93,25 @@ install(
 )
 
 install(
-    EXPORT bassCpp-targets
-    FILE bassCppConfig.cmake
-    NAMESPACE bassCpp::
-    DESTINATION lib/cmake/bassCpp
+    EXPORT ${PROJECT_NAME}-targets
+    FILE ${PROJECT_NAME}Config.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION lib/cmake/${PROJECT_NAME}
 )
+
+set(ReflectionExec "VEngineHeaderGen")
+set(Reflection_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
+add_executable(${ReflectionExec} ${Reflection_SOURCES})
+target_include_directories(${ReflectionExec}
+    PRIVATE
+    "$<TARGET_PROPERTY:${PROJECT_NAME},INTERFACE_INCLUDE_DIRECTORIES>"
+)
+
+add_custom_target(ReflectHeaders
+    COMMAND ${ReflectionExec} -s ${CMAKE_CURRENT_SOURCE_DIR}/include -o ${CMAKE_CURRENT_SOURCE_DIR}/include/generated
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Reflect vengine headers"
+    SOURCES ${Reflection_SOURCES}
+)
+
+add_dependencies(${PROJECT_NAME} ReflectHeaders)
