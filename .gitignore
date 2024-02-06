@@ -1,5 +1,5 @@
-/build
-/native
+**/build
+**/native
 /vtest
 /install_result
 /install_build

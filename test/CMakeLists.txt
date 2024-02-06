@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+SET(CMAKE_CXX_STANDARD_LIBRARIES "")
+project(basscppTest VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
+set(INSTALLED_DIR ${CMAKE_CURRENT_LIST_DIR}/../install_result)
+option(INTERNAL_BUILD_DEV "Build dev executable" OFF)
+list(APPEND CMAKE_PREFIX_PATH ${INSTALLED_DIR})
+find_package(basscpp REQUIRED)
+
+add_executable(Test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+target_include_directories(Test PUBLIC ${INSTALLED_DIR}/include)
+target_link_libraries(Test PUBLIC basscpp::basscpp)

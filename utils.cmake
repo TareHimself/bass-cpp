@@ -65,7 +65,7 @@ function(BuildThirdPartyDep FOLDER_NAME REPOSITORY VERSION RESULT PRE_BUILD_FN B
   set(${RESULT} ${RESULT_DIR} PARENT_SCOPE)
 endfunction()
 
-macro(DownloadBass DOWNLOAD_DIR)
+macro(DownloadBass DOWNLOAD_DIR FILE_NAME)
   
   if(NOT EXISTS ${DOWNLOAD_DIR})
     file(MAKE_DIRECTORY ${DOWNLOAD_DIR})
@@ -79,6 +79,7 @@ macro(DownloadBass DOWNLOAD_DIR)
       file(COPY ${EXTRACTED_FOLDER}/x64/bass.dll DESTINATION ${DOWNLOAD_DIR})
       file(COPY ${EXTRACTED_FOLDER}/c/bass.h DESTINATION ${DOWNLOAD_DIR})
       file(COPY ${EXTRACTED_FOLDER}/c/x64/bass.lib DESTINATION ${DOWNLOAD_DIR})
+      set(${FILE_NAME} bass.lib)
     elseif(LINUX)
       set(DOWNLOADED_FILE ${CMAKE_CURRENT_BINARY_DIR}/bass.zip)
       set(EXTRACTED_FOLDER ${CMAKE_CURRENT_BINARY_DIR}/bass)
@@ -88,6 +89,7 @@ macro(DownloadBass DOWNLOAD_DIR)
 
       file(COPY ${EXTRACTED_FOLDER}/libs/x86_64/libbass.so DESTINATION ${DOWNLOAD_DIR})
       file(COPY ${EXTRACTED_FOLDER}/bass.h DESTINATION ${DOWNLOAD_DIR})
+      set(${FILE_NAME} libbass.so)
     elseif(APPLE)
       set(DOWNLOADED_FILE ${CMAKE_CURRENT_BINARY_DIR}/bass.zip)
       set(EXTRACTED_FOLDER ${CMAKE_CURRENT_BINARY_DIR}/bass)
@@ -97,6 +99,7 @@ macro(DownloadBass DOWNLOAD_DIR)
 
       file(COPY ${EXTRACTED_FOLDER}/libbass.dylib DESTINATION ${DOWNLOAD_DIR})
       file(COPY ${EXTRACTED_FOLDER}/bass.h DESTINATION ${DOWNLOAD_DIR})
+      set(${FILE_NAME} libbass.dylib)
     endif()
   endif()
   

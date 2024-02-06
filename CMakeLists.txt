@@ -22,7 +22,7 @@ set(BASS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/native)
 
 list(APPEND CMAKE_PREFIX_PATH ${BASS_DIR})
 
-DownloadBass(${BASS_DIR})
+DownloadBass(${BASS_DIR} "BASS_LIB_NAME")
 
 find_path(BASS_AUDIO_H bass.h)
 find_library(BASS_AUDIO_LIB bass)
@@ -30,45 +30,20 @@ find_library(BASS_AUDIO_LIB bass)
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include> 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    $<BUILD_INTERFACE:${BASS_AUDIO_H}>
-    $<INSTALL_INTERFACE:include> 
+    ${BASS_AUDIO_H}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${BASS_AUDIO_LIB})
-
-
-# get_filename_component(BASS_AUDIO_LIB_NAME ${BASS_AUDIO_LIB} NAME)
-
-# if(WIN32)
-#     # set_target_properties(${PROJECT_NAME} PROPERTIES
-#     #     IMPORTED_IMPLIB_DEBUG "${_IMPORT_PREFIX}/lib/bassCpp.lib"
-#     #     IMPORTED_LOCATION_DEBUG "${_IMPORT_PREFIX}/bin/bassCpp.dll"
-#     # )
-#     set_property(TARGET ${PROJECT_NAME} 
-#         PROPERTY 
-#         IMPORTED_LOCATION 
-#         $<BUILD_INTERFACE:${BASS_DIR}/bass>
-#         $<INSTALL_INTERFACE:bin/bass>
-#     )
-
-#     install(
-#         FILES ${BASS_DIR}/bass.dll
-#         DESTINATION bin
-#     )
-# endif()
-# message(STATUS "LIB NAME ${BASS_AUDIO_LIB_NAME}")
-# target_link_libraries(${PROJECT_NAME} 
-#     INTERFACE
-#     $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
-#     $<INSTALL_INTERFACE:lib/bass>
-# )
+target_link_libraries(
+    ${PROJECT_NAME}
+    PUBLIC
+    ${BASS_AUDIO_LIB}
+)
 
 if(INTERNAL_BUILD_DEV)
     add_executable(Test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
@@ -83,6 +58,11 @@ install(
 install(
     FILES ${BASS_AUDIO_H}/bass.h
     DESTINATION include/
+)
+
+install(
+    FILES ${BASS_AUDIO_LIB}
+    DESTINATION lib
 )
 
 if(WIN32)
@@ -105,5 +85,10 @@ install(
     EXPORT ${PROJECT_NAME}-targets
     FILE ${PROJECT_NAME}Config.cmake
     NAMESPACE ${PROJECT_NAME}::
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
+
+install(
+    FILES ${CMAKE_CURRENT_LIST_DIR}/basscppConfig.cmake
     DESTINATION lib/cmake/${PROJECT_NAME}
 )
