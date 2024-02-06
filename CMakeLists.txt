@@ -30,19 +30,24 @@ find_library(BASS_AUDIO_LIB bass)
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include> 
 )
 
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-    ${BASS_AUDIO_H}
+    
+    $<BUILD_INTERFACE:${BASS_AUDIO_H}>
+    $<INSTALL_INTERFACE:include> 
 )
 
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC
-    ${BASS_AUDIO_LIB}
+    
+    $<BUILD_INTERFACE:${BASS_AUDIO_LIB}>
+    $<INSTALL_INTERFACE:lib> 
 )
 
 if(INTERNAL_BUILD_DEV)
