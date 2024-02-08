@@ -9,7 +9,7 @@ int main()
     try
     {
         // bass::init(-1, 44100, 0, nullptr);
-        // if(const auto sample = bass::createFileStream(R"(D:\Github\vengine\test\a            udio\tokyo lofi hiphop.wav)"); sample->Play())
+        // if(const auto sample = bass::createFileStream(R"(D:\Github\vengine\test\audio\tokyo lofi hiphop.wav)"); sample->Play())
         // {
         //     while(true)
         //     {
