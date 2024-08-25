@@ -6,7 +6,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/utils.cmake)
 SET(CMAKE_CXX_STANDARD_LIBRARIES "")
 project(basscpp VERSION 1.0.0 DESCRIPTION "C++ Wrapper for BassAudio")
 
-option(INTERNAL_BUILD_DEV "Build dev executable" OFF)
+option(BUILD_DEV "Build dev executable" ${PROJECT_IS_TOP_LEVEL})
 
 file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" )
 
@@ -50,19 +50,19 @@ target_link_libraries(
     $<INSTALL_INTERFACE:lib> 
 )
 
-if(INTERNAL_BUILD_DEV)
+if(BUILD_DEV)
     add_executable(Test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
     target_link_libraries(Test ${PROJECT_NAME})
 endif()
 
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    DESTINATION include/
+    DESTINATION include
 )
 
 install(
     FILES ${BASS_AUDIO_H}/bass.h
-    DESTINATION include/
+    DESTINATION include
 )
 
 install(

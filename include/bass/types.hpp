@@ -6,294 +6,302 @@ namespace bass
 {
     using WindowHandle = HWND;
     using Vector = BASS_3DVECTOR;
-    enum EBassConfig
+    enum class Config
     {
-        ConfigBuffer = BASS_CONFIG_BUFFER,
-        ConfigUpdatePeriod = BASS_CONFIG_UPDATEPERIOD,
-        ConfigGVolSample = BASS_CONFIG_GVOL_SAMPLE,
-        ConfigGVolStream = BASS_CONFIG_GVOL_STREAM,
-        ConfigGVolMusic = BASS_CONFIG_GVOL_MUSIC,
-        ConfigCurveVol = BASS_CONFIG_CURVE_VOL,
-        ConfigCurvePan = BASS_CONFIG_CURVE_PAN,
-        ConfigFloatDSP = BASS_CONFIG_FLOATDSP,
-        ConfigAlgorithm3D = BASS_CONFIG_3DALGORITHM,
-        ConfigNetTimeout = BASS_CONFIG_NET_TIMEOUT,
-        ConfigNetBuffer = BASS_CONFIG_NET_BUFFER,
-        ConfigPauseNoPlay = BASS_CONFIG_PAUSE_NOPLAY,
-        ConfigNetPreBuf = BASS_CONFIG_NET_PREBUF,
-        ConfigNetPassive = BASS_CONFIG_NET_PASSIVE,
-        ConfigRecBuffer = BASS_CONFIG_REC_BUFFER,
-        ConfigNetPlaylist = BASS_CONFIG_NET_PLAYLIST,
-        ConfigMusicVirtual = BASS_CONFIG_MUSIC_VIRTUAL,
-        ConfigVerify = BASS_CONFIG_VERIFY,
-        ConfigUpdateThreads = BASS_CONFIG_UPDATETHREADS,
-        ConfigDevBuffer = BASS_CONFIG_DEV_BUFFER,
-        ConfigRecLoopback = BASS_CONFIG_REC_LOOPBACK,
-        ConfigVistaTruePos = BASS_CONFIG_VISTA_TRUEPOS,
-        ConfigIOSSession = BASS_CONFIG_IOS_SESSION,
-        ConfigIOSMixAudio = BASS_CONFIG_IOS_MIXAUDIO,
-        ConfigDevDefault = BASS_CONFIG_DEV_DEFAULT,
-        ConfigNetReadTimeout = BASS_CONFIG_NET_READTIMEOUT,
-        ConfigVistaSpeakers = BASS_CONFIG_VISTA_SPEAKERS,
-        ConfigIOSSpeaker = BASS_CONFIG_IOS_SPEAKER,
-        ConfigMFDisable = BASS_CONFIG_MF_DISABLE,
-        ConfigHandles = BASS_CONFIG_HANDLES,
-        ConfigUnicode = BASS_CONFIG_UNICODE,
-        ConfigSRC = BASS_CONFIG_SRC,
-        ConfigSRCSample = BASS_CONFIG_SRC_SAMPLE,
-        ConfigAsyncFileBuffer = BASS_CONFIG_ASYNCFILE_BUFFER,
-        ConfigOggPrescan = BASS_CONFIG_OGG_PRESCAN,
-        ConfigMFVideo = BASS_CONFIG_MF_VIDEO,
-        ConfigAirPlay = BASS_CONFIG_AIRPLAY,
-        ConfigDevNonStop = BASS_CONFIG_DEV_NONSTOP,
-        ConfigIOSNoCategory = BASS_CONFIG_IOS_NOCATEGORY,
-        ConfigVerifyNet = BASS_CONFIG_VERIFY_NET,
-        ConfigDevPeriod = BASS_CONFIG_DEV_PERIOD,
-        ConfigFloatConfig = BASS_CONFIG_FLOAT,
-        ConfigNetSeek = BASS_CONFIG_NET_SEEK,
-        ConfigAMDisable = BASS_CONFIG_AM_DISABLE,
-        ConfigNetPlaylistDepth = BASS_CONFIG_NET_PLAYLIST_DEPTH,
-        ConfigNetPreBufWait = BASS_CONFIG_NET_PREBUF_WAIT,
-        ConfigAndroidSessionID = BASS_CONFIG_ANDROID_SESSIONID,
-        ConfigWASAPIPersist = BASS_CONFIG_WASAPI_PERSIST,
-        ConfigRecWASAPI = BASS_CONFIG_REC_WASAPI,
-        ConfigAndroidAAudio = BASS_CONFIG_ANDROID_AAUDIO,
-        ConfigSampleOneHandle = BASS_CONFIG_SAMPLE_ONEHANDLE,
-        ConfigNetMeta = BASS_CONFIG_NET_META,
-        ConfigNetRestrRate = BASS_CONFIG_NET_RESTRATE,
-        ConfigRecDefault = BASS_CONFIG_REC_DEFAULT,
-        ConfigNoRamp = BASS_CONFIG_NORAMP,
+        Buffer = BASS_CONFIG_BUFFER,
+        UpdatePeriod = BASS_CONFIG_UPDATEPERIOD,
+        GVolSample = BASS_CONFIG_GVOL_SAMPLE,
+        GVolStream = BASS_CONFIG_GVOL_STREAM,
+        GVolMusic = BASS_CONFIG_GVOL_MUSIC,
+        CurveVol = BASS_CONFIG_CURVE_VOL,
+        CurvePan = BASS_CONFIG_CURVE_PAN,
+        FloatDSP = BASS_CONFIG_FLOATDSP,
+        Algorithm3D = BASS_CONFIG_3DALGORITHM,
+        NetTimeout = BASS_CONFIG_NET_TIMEOUT,
+        NetBuffer = BASS_CONFIG_NET_BUFFER,
+        PauseNoPlay = BASS_CONFIG_PAUSE_NOPLAY,
+        NetPreBuf = BASS_CONFIG_NET_PREBUF,
+        NetPassive = BASS_CONFIG_NET_PASSIVE,
+        RecBuffer = BASS_CONFIG_REC_BUFFER,
+        NetPlaylist = BASS_CONFIG_NET_PLAYLIST,
+        MusicVirtual = BASS_CONFIG_MUSIC_VIRTUAL,
+        Verify = BASS_CONFIG_VERIFY,
+        UpdateThreads = BASS_CONFIG_UPDATETHREADS,
+        DevBuffer = BASS_CONFIG_DEV_BUFFER,
+        RecLoopback = BASS_CONFIG_REC_LOOPBACK,
+        VistaTruePos = BASS_CONFIG_VISTA_TRUEPOS,
+        IOSSession = BASS_CONFIG_IOS_SESSION,
+        IOSMixAudio = BASS_CONFIG_IOS_MIXAUDIO,
+        DevDefault = BASS_CONFIG_DEV_DEFAULT,
+        NetReadTimeout = BASS_CONFIG_NET_READTIMEOUT,
+        VistaSpeakers = BASS_CONFIG_VISTA_SPEAKERS,
+        IOSSpeaker = BASS_CONFIG_IOS_SPEAKER,
+        MFDisable = BASS_CONFIG_MF_DISABLE,
+        Handles = BASS_CONFIG_HANDLES,
+        Unicode = BASS_CONFIG_UNICODE,
+        SRC = BASS_CONFIG_SRC,
+        SRCSample = BASS_CONFIG_SRC_SAMPLE,
+        AsyncFileBuffer = BASS_CONFIG_ASYNCFILE_BUFFER,
+        OggPrescan = BASS_CONFIG_OGG_PRESCAN,
+        MFVideo = BASS_CONFIG_MF_VIDEO,
+        AirPlay = BASS_CONFIG_AIRPLAY,
+        DevNonStop = BASS_CONFIG_DEV_NONSTOP,
+        IOSNoCategory = BASS_CONFIG_IOS_NOCATEGORY,
+        VerifyNet = BASS_CONFIG_VERIFY_NET,
+        DevPeriod = BASS_CONFIG_DEV_PERIOD,
+        FloatConfig = BASS_CONFIG_FLOAT,
+        NetSeek = BASS_CONFIG_NET_SEEK,
+        AMDisable = BASS_CONFIG_AM_DISABLE,
+        NetPlaylistDepth = BASS_CONFIG_NET_PLAYLIST_DEPTH,
+        NetPreBufWait = BASS_CONFIG_NET_PREBUF_WAIT,
+        AndroidSessionID = BASS_CONFIG_ANDROID_SESSIONID,
+        WASAPIPersist = BASS_CONFIG_WASAPI_PERSIST,
+        RecWASAPI = BASS_CONFIG_REC_WASAPI,
+        AndroidAAudio = BASS_CONFIG_ANDROID_AAUDIO,
+        SampleOneHandle = BASS_CONFIG_SAMPLE_ONEHANDLE,
+        NetMeta = BASS_CONFIG_NET_META,
+        NetRestrRate = BASS_CONFIG_NET_RESTRATE,
+        RecDefault = BASS_CONFIG_REC_DEFAULT,
+        NoRamp = BASS_CONFIG_NORAMP,
 
         // BASS_SetConfigPtr options
-        ConfigNetAgent = BASS_CONFIG_NET_AGENT,
-        ConfigNetProxy = BASS_CONFIG_NET_PROXY,
-        ConfigIOSNotify = BASS_CONFIG_IOS_NOTIFY,
-        ConfigAndroidJavaVM = BASS_CONFIG_ANDROID_JAVAVM,
-        ConfigLibSSL = BASS_CONFIG_LIBSSL,
-        ConfigFileName = BASS_CONFIG_FILENAME,
+        NetAgent = BASS_CONFIG_NET_AGENT,
+        NetProxy = BASS_CONFIG_NET_PROXY,
+        IOSNotify = BASS_CONFIG_IOS_NOTIFY,
+        AndroidJavaVM = BASS_CONFIG_ANDROID_JAVAVM,
+        LibSSL = BASS_CONFIG_LIBSSL,
+        FileName = BASS_CONFIG_FILENAME,
 
-        ConfigThreadFlag = BASS_CONFIG_THREAD // flag: thread-specific setting
+        ThreadFlag = BASS_CONFIG_THREAD // flag: thread-specific setting
     };
 
-    enum EBassCreate
+    
+
+    enum class CreateFlag : DWORD
     {
         // 8 bit
-        CreateSampleBits = BASS_SAMPLE_8BITS,
+        SampleBits = BASS_SAMPLE_8BITS,
         // 32 bit floating-point
-        CreateSampleFloat = BASS_SAMPLE_FLOAT,
+        SampleFloat = BASS_SAMPLE_FLOAT,
         // mono
-        CreateSampleMono = BASS_SAMPLE_MONO,
+        SampleMono = BASS_SAMPLE_MONO,
         // looped
-        CreateSampleLooped = BASS_SAMPLE_LOOP,
+        SampleLooped = BASS_SAMPLE_LOOP,
         // 3D functionality
-        CreateSampleSpatial = BASS_SAMPLE_3D,
+        SampleSpatial = BASS_SAMPLE_3D,
         // unused
-        CreateSampleSoftware = BASS_SAMPLE_SOFTWARE,
+        SampleSoftware = BASS_SAMPLE_SOFTWARE,
         // mute at max distance (3D only)
-        CreateSampleMuteMax = BASS_SAMPLE_MUTEMAX,
+        SampleMuteMax = BASS_SAMPLE_MUTEMAX,
         // unused
-        CreateSampleVAM = BASS_SAMPLE_VAM,
+        SampleVAM = BASS_SAMPLE_VAM,
         // unused
-        CreateSampleFX = BASS_SAMPLE_FX,
+        SampleFX = BASS_SAMPLE_FX,
         // override lowest volume
-        CreateSampleOverVol = BASS_SAMPLE_OVER_VOL,
+        SampleOverVol = BASS_SAMPLE_OVER_VOL,
         // override longest playing
-        CreateSampleOverPos = BASS_SAMPLE_OVER_POS,
+        SampleOverPos = BASS_SAMPLE_OVER_POS,
         // override furthest from listener (3D only)
-        CreateSampleOverDist = BASS_SAMPLE_OVER_DIST,
+        SampleOverDist = BASS_SAMPLE_OVER_DIST,
         // scan file for accurate seeking and length
-        CreateStreamPreScan = BASS_STREAM_PRESCAN,
+        StreamPreScan = BASS_STREAM_PRESCAN,
         // automatically free the stream when it stops/ends
-        CreateStreamAutoFree = BASS_STREAM_AUTOFREE,
+        StreamAutoFree = BASS_STREAM_AUTOFREE,
         // restrict the download rate of internet file stream
-        CreateStreamRestrictRate = BASS_STREAM_RESTRATE,
+        StreamRestrictRate = BASS_STREAM_RESTRATE,
         // download internet file stream in small blocks
-        CreateStreamBlock = BASS_STREAM_BLOCK,
+        StreamBlock = BASS_STREAM_BLOCK,
         // don't play the stream, only decode
-        CreateStreamDecode = BASS_STREAM_DECODE,
+        StreamDecode = BASS_STREAM_DECODE,
         // give server status info (HTTP/ICY tags) in DOWNLOADPROC
-        CreateStreamStatus = BASS_STREAM_STATUS
+        StreamStatus = BASS_STREAM_STATUS
     };
 
-    enum EBassState
+    inline CreateFlag operator |(CreateFlag a, CreateFlag b) {
+        return static_cast<CreateFlag>(static_cast<DWORD>(a) | static_cast<DWORD>(b));
+    }
+
+    
+    
+    enum class State
     {
         // The channel is not active, or handle is not a valid channel.
-        StateStopped = BASS_ACTIVE_STOPPED,
+        Stopped = BASS_ACTIVE_STOPPED,
         // The channel is playing (or recording).
-        StatePlaying = BASS_ACTIVE_PLAYING,
+        Playing = BASS_ACTIVE_PLAYING,
         // The channel is paused.
-        StatePaused = BASS_ACTIVE_PAUSED,
+        Paused = BASS_ACTIVE_PAUSED,
         // The channel's device is paused.
-        StatePausedDevice = BASS_ACTIVE_PAUSED_DEVICE,
+        PausedDevice = BASS_ACTIVE_PAUSED_DEVICE,
         // Playback of the stream has been stalled due to a lack of sample data. Playback will automatically resume once there is sufficient data to do so.
-        StateStalled = BASS_ACTIVE_STALLED
+        Stalled = BASS_ACTIVE_STALLED
     };
 
-    enum EBassPos
+    enum class Position
     {
         // byte position
-        PosByte = BASS_POS_BYTE,
+        Byte = BASS_POS_BYTE,
         // order.row position, MAKELONG(order,row)
-        PosMusicOrder = BASS_POS_MUSIC_ORDER,
+        MusicOrder = BASS_POS_MUSIC_ORDER,
         // OGG bitstream number
-        PosOGG = BASS_POS_OGG,
+        OGG = BASS_POS_OGG,
         // trimmed end position
-        PosEnd = BASS_POS_END,
+        End = BASS_POS_END,
         // loop start position
-        PosLoop = BASS_POS_LOOP,
+        Loop = BASS_POS_LOOP,
         // flag: flush decoder/FX buffers
-        PosFlush = BASS_POS_FLUSH,
+        Flush = BASS_POS_FLUSH,
         // flag: reset user file buffers
-        PosReset = BASS_POS_RESET,
+        Reset = BASS_POS_RESET,
         // flag: seek relative to the current position
-        PosRelative = BASS_POS_RELATIVE,
+        Relative = BASS_POS_RELATIVE,
         // flag: allow seeking to an inexact position
-        PosInexact = BASS_POS_INEXACT,
+        Inexact = BASS_POS_INEXACT,
         // flag: get the decoding (not playing) position
-        PosDecode = BASS_POS_DECODE,
+        Decode = BASS_POS_DECODE,
         // flag: decode to the position instead of seeking
-        PosDecodeTo = BASS_POS_DECODETO,
+        DecodeTo = BASS_POS_DECODETO,
         // flag: scan to the position
-        PosScan = BASS_POS_SCAN
+        Scan = BASS_POS_SCAN
     };
 
-    enum EBassError
+    enum class Error
     {
         // All is OK
-        ErrorOK = BASS_OK,
+        OK = BASS_OK,
         // Memory error
-        ErrorMemory = BASS_ERROR_MEM,
+        Memory = BASS_ERROR_MEM,
         // Can't open the file
-        ErrorFileOpen = BASS_ERROR_FILEOPEN,
+        FileOpen = BASS_ERROR_FILEOPEN,
         // Can't find a free/valid driver
-        ErrorDriver = BASS_ERROR_DRIVER,
+        Driver = BASS_ERROR_DRIVER,
         // The sample buffer was lost
-        ErrorBufferLost = BASS_ERROR_BUFLOST,
+        BufferLost = BASS_ERROR_BUFLOST,
         // Invalid handle
-        ErrorHandle = BASS_ERROR_HANDLE,
+        Handle = BASS_ERROR_HANDLE,
         // Unsupported sample format
-        ErrorFormat = BASS_ERROR_FORMAT,
+        Format = BASS_ERROR_FORMAT,
         // Invalid position
-        ErrorPosition = BASS_ERROR_POSITION,
+        Position = BASS_ERROR_POSITION,
         // BASS_Init has not been successfully called
-        ErrorInit = BASS_ERROR_INIT,
+        Init = BASS_ERROR_INIT,
         // BASS_Start has not been successfully called
-        ErrorStart = BASS_ERROR_START,
+        Start = BASS_ERROR_START,
         // SSL/HTTPS support isn't available
-        ErrorSSL = BASS_ERROR_SSL,
+        SSL = BASS_ERROR_SSL,
         // Device needs to be reinitialized
-        ErrorReinit = BASS_ERROR_REINIT,
+        Reinit = BASS_ERROR_REINIT,
         // Already initialized/paused/whatever
-        ErrorAlready = BASS_ERROR_ALREADY,
+        Already = BASS_ERROR_ALREADY,
         // File does not contain audio
-        ErrorNotAudio = BASS_ERROR_NOTAUDIO,
+        NotAudio = BASS_ERROR_NOTAUDIO,
         // Can't get a free channel
-        ErrorNoChannel = BASS_ERROR_NOCHAN,
+        NoChannel = BASS_ERROR_NOCHAN,
         // An illegal type was specified
-        ErrorIllegalType = BASS_ERROR_ILLTYPE,
+        IllegalType = BASS_ERROR_ILLTYPE,
         // An illegal parameter was specified
-        ErrorIllegalParam = BASS_ERROR_ILLPARAM,
+        IllegalParam = BASS_ERROR_ILLPARAM,
         // No 3D support
-        ErrorNo3D = BASS_ERROR_NO3D,
+        No3D = BASS_ERROR_NO3D,
         // No EAX support
-        ErrorNoEAX = BASS_ERROR_NOEAX,
+        NoEAX = BASS_ERROR_NOEAX,
         // Illegal device number
-        ErrorDevice = BASS_ERROR_DEVICE,
+        Device = BASS_ERROR_DEVICE,
         // Not playing
-        ErrorNoPlay = BASS_ERROR_NOPLAY,
+        NoPlay = BASS_ERROR_NOPLAY,
         // Illegal sample rate
-        ErrorFrequency = BASS_ERROR_FREQ,
+        Frequency = BASS_ERROR_FREQ,
         // The stream is not a file stream
-        ErrorNotFile = BASS_ERROR_NOTFILE,
+        NotFile = BASS_ERROR_NOTFILE,
         // No hardware voices available
-        ErrorNoHardware = BASS_ERROR_NOHW,
+        NoHardware = BASS_ERROR_NOHW,
         // The file has no sample data
-        ErrorEmpty = BASS_ERROR_EMPTY,
+        Empty = BASS_ERROR_EMPTY,
         // No internet connection could be opened
-        ErrorNoInternet = BASS_ERROR_NONET,
+        NoInternet = BASS_ERROR_NONET,
         // Couldn't create the file
-        ErrorCreate = BASS_ERROR_CREATE,
+        Create = BASS_ERROR_CREATE,
         // Effects are not available
-        ErrorNoFX = BASS_ERROR_NOFX,
+        NoFX = BASS_ERROR_NOFX,
         // Requested data/action is not available
-        ErrorNotAvailable = BASS_ERROR_NOTAVAIL,
+        NotAvailable = BASS_ERROR_NOTAVAIL,
         // The channel is/isn't a "decoding channel"
-        ErrorDecode = BASS_ERROR_DECODE,
+        Decode = BASS_ERROR_DECODE,
         // A sufficient DirectX version is not installed
-        ErrorDX = BASS_ERROR_DX,
+        DX = BASS_ERROR_DX,
         // Connection timed out
-        ErrorTimeout = BASS_ERROR_TIMEOUT,
+        Timeout = BASS_ERROR_TIMEOUT,
         // Unsupported file format
-        ErrorFileFormat = BASS_ERROR_FILEFORM,
+        FileFormat = BASS_ERROR_FILEFORM,
         // Unavailable speaker
-        ErrorSpeaker = BASS_ERROR_SPEAKER,
+        Speaker = BASS_ERROR_SPEAKER,
         // Invalid BASS version (used by add-ons)
-        ErrorVersion = BASS_ERROR_VERSION,
+        Version = BASS_ERROR_VERSION,
         // Codec is not available/supported
-        ErrorCodec = BASS_ERROR_CODEC,
+        Codec = BASS_ERROR_CODEC,
         // The channel/file has ended
-        ErrorEnded = BASS_ERROR_ENDED,
+        Ended = BASS_ERROR_ENDED,
         // The device is busy
-        ErrorBusy = BASS_ERROR_BUSY,
+        Busy = BASS_ERROR_BUSY,
         // Unstreamable file
-        ErrorUnstreamable = BASS_ERROR_UNSTREAMABLE,
+        Unstreamable = BASS_ERROR_UNSTREAMABLE,
         // Unsupported protocol
-        ErrorProtocol = BASS_ERROR_PROTOCOL,
+        Protocol = BASS_ERROR_PROTOCOL,
         // Access denied
-        ErrorDenied = BASS_ERROR_DENIED,
+        Denied = BASS_ERROR_DENIED,
         // Some other mystery problem
-        ErrorUnknown = BASS_ERROR_UNKNOWN
+        Unknown = BASS_ERROR_UNKNOWN
     };
 
-    enum EBassAttribute
+    enum class Attribute
     {
-        AttributeFrequency = BASS_ATTRIB_FREQ,
-        AttributeVolume = BASS_ATTRIB_VOL,
-        AttributePan = BASS_ATTRIB_PAN,
-        AttributeEAXMix = BASS_ATTRIB_EAXMIX,
-        AttributeNoBuffer = BASS_ATTRIB_NOBUFFER,
-        AttributeVBR = BASS_ATTRIB_VBR,
-        AttributeCPU = BASS_ATTRIB_CPU,
-        AttributeSRC = BASS_ATTRIB_SRC,
-        AttributeNetResume = BASS_ATTRIB_NET_RESUME,
-        AttributeScanInfo = BASS_ATTRIB_SCANINFO,
-        AttributeNoRamp = BASS_ATTRIB_NORAMP,
-        AttributeBitrate = BASS_ATTRIB_BITRATE,
-        AttributeBuffer = BASS_ATTRIB_BUFFER,
-        AttributeGranule = BASS_ATTRIB_GRANULE,
-        AttributeUser = BASS_ATTRIB_USER,
-        AttributeTail = BASS_ATTRIB_TAIL,
-        AttributePushLimit = BASS_ATTRIB_PUSH_LIMIT,
-        AttributeDownloadProc = BASS_ATTRIB_DOWNLOADPROC,
-        AttributeVolDSP = BASS_ATTRIB_VOLDSP,
-        AttributeVolDSPPriority = BASS_ATTRIB_VOLDSP_PRIORITY,
-        AttributeMusicAmplify = BASS_ATTRIB_MUSIC_AMPLIFY,
-        AttributeMusicPanSep = BASS_ATTRIB_MUSIC_PANSEP,
-        AttributeMusicPScaler = BASS_ATTRIB_MUSIC_PSCALER,
-        AttributeMusicBPM = BASS_ATTRIB_MUSIC_BPM,
-        AttributeMusicSpeed = BASS_ATTRIB_MUSIC_SPEED,
-        AttributeMusicVolGlobal = BASS_ATTRIB_MUSIC_VOL_GLOBAL,
-        AttributeMusicActive = BASS_ATTRIB_MUSIC_ACTIVE,
-        AttributeMusicVolChan = BASS_ATTRIB_MUSIC_VOL_CHAN,
+        Frequency = BASS_ATTRIB_FREQ,
+        Volume = BASS_ATTRIB_VOL,
+        Pan = BASS_ATTRIB_PAN,
+        EAXMix = BASS_ATTRIB_EAXMIX,
+        NoBuffer = BASS_ATTRIB_NOBUFFER,
+        VBR = BASS_ATTRIB_VBR,
+        CPU = BASS_ATTRIB_CPU,
+        SRC = BASS_ATTRIB_SRC,
+        NetResume = BASS_ATTRIB_NET_RESUME,
+        ScanInfo = BASS_ATTRIB_SCANINFO,
+        NoRamp = BASS_ATTRIB_NORAMP,
+        Bitrate = BASS_ATTRIB_BITRATE,
+        Buffer = BASS_ATTRIB_BUFFER,
+        Granule = BASS_ATTRIB_GRANULE,
+        User = BASS_ATTRIB_USER,
+        Tail = BASS_ATTRIB_TAIL,
+        PushLimit = BASS_ATTRIB_PUSH_LIMIT,
+        DownloadProc = BASS_ATTRIB_DOWNLOADPROC,
+        VolDSP = BASS_ATTRIB_VOLDSP,
+        VolDSPPriority = BASS_ATTRIB_VOLDSP_PRIORITY,
+        MusicAmplify = BASS_ATTRIB_MUSIC_AMPLIFY,
+        MusicPanSep = BASS_ATTRIB_MUSIC_PANSEP,
+        MusicPScaler = BASS_ATTRIB_MUSIC_PSCALER,
+        MusicBPM = BASS_ATTRIB_MUSIC_BPM,
+        MusicSpeed = BASS_ATTRIB_MUSIC_SPEED,
+        MusicVolGlobal = BASS_ATTRIB_MUSIC_VOL_GLOBAL,
+        MusicActive = BASS_ATTRIB_MUSIC_ACTIVE,
+        MusicVolChan = BASS_ATTRIB_MUSIC_VOL_CHAN,
         // + channel #
-        AttributeMusicVolInst = BASS_ATTRIB_MUSIC_VOL_INST // + instrument #
+        MusicVolInst = BASS_ATTRIB_MUSIC_VOL_INST // + instrument #
     };
 
-    enum EBass3DMode
+    enum class SpatialMode
     {
-        B3DModeNormal = BASS_3DMODE_NORMAL,
-        B3DModeRelative = BASS_3DMODE_RELATIVE,
-        B3DModeOff = BASS_3DMODE_OFF
+        Normal = BASS_3DMODE_NORMAL,
+        Relative = BASS_3DMODE_RELATIVE,
+        Off = BASS_3DMODE_OFF
     };
 
-    struct BassDevice
+    struct Device
     {
         DWORD id;
         std::string name;
         std::string driver;
         DWORD flags;
 
-        BassDevice& operator=(const BASS_DEVICEINFO& other)
+        Device& operator=(const BASS_DEVICEINFO& other)
         {
             name = other.name;
             driver = other.driver;

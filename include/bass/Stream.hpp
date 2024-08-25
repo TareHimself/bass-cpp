@@ -25,6 +25,7 @@ namespace bass
         FileStream(const std::filesystem::path& file, const DWORD& handle);
     };
 
+    FileStream* createFileStream(const std::filesystem::path& file,DWORD offset,CreateFlag flags);
     FileStream* createFileStream(const std::filesystem::path& file,DWORD offset,DWORD flags);
 
     class UrlStream : public  Stream

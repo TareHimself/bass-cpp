@@ -1,3 +1,4 @@
+#pragma once
 #include <optional>
 #include <vector>
 #include "types.hpp"
@@ -13,9 +14,9 @@ namespace bass
 
     DWORD getConfig(const DWORD option);
 
-    void setConfig(const EBassConfig option, const DWORD val);
+    void setConfig(const Config option, const DWORD val);
 
-    DWORD getConfig(const EBassConfig option);
+    DWORD getConfig(const Config option);
 
     bool start();
 
@@ -32,5 +33,5 @@ namespace bass
 
     void get3DFactors(float* distanceFactor, float* rolloffFactor, float* dopplerFactor);
 
-    std::vector<BassDevice> getDevices();
+    std::vector<Device> getDevices();
 }

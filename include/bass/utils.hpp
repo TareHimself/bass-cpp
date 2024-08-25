@@ -4,14 +4,14 @@
 #include <string>
 namespace bass
 {
-    std::string bassErrorToString(EBassError error);
+    std::string bassErrorToString(Error error);
     
     template <typename T>
     T throwOrReturn(T&& val)
     {
-        const auto err = static_cast<EBassError>(BASS_ErrorGetCode());
+        const auto err = static_cast<Error>(BASS_ErrorGetCode());
         
-        if(err == ErrorOK)
+        if(err == Error::OK)
         {
             return val;
         }

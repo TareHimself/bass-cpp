@@ -1,4 +1,4 @@
-#include <bass/Bass.hpp>
+#include <bass/bass.hpp>
 
 #include "bass/utils.hpp"
 
@@ -31,12 +31,12 @@ namespace bass
         return throwOrReturn(-1);
     }
 
-    void setConfig(const EBassConfig option, const DWORD val)
+    void setConfig(const Config option, const DWORD val)
     {
         setConfig(static_cast<DWORD>(option),val);
     }
 
-    DWORD getConfig(const EBassConfig option)
+    DWORD getConfig(const Config option)
     {
         return getConfig(static_cast<DWORD>(option));
     }
@@ -92,13 +92,13 @@ namespace bass
         }
     }
 
-    std::vector<BassDevice> getDevices()
+    std::vector<Device> getDevices()
     {
-        std::vector<BassDevice> devices;
+        std::vector<Device> devices;
         BASS_DEVICEINFO currentInfo{};
         for(auto i = 1; BASS_GetDeviceInfo(i,&currentInfo); i++)
         {
-            BassDevice device{};
+            Device device{};
             device.id = i;
             device = currentInfo;
             devices.push_back(device);

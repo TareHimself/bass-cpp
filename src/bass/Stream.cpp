@@ -18,7 +18,12 @@ namespace bass
     {
         _file = file;
     }
-    
+
+    FileStream* createFileStream(const std::filesystem::path& file, DWORD offset, CreateFlag flags)
+    {
+        return createFileStream(file,offset,static_cast<DWORD>(flags));
+    }
+
     FileStream* createFileStream(const std::filesystem::path& file, const DWORD offset, const DWORD flags)
     {
         if(const auto stream = BASS_StreamCreateFile(false,file.c_str(),offset,0,flags))

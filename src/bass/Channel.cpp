@@ -54,12 +54,12 @@ namespace bass
         return throwOrReturn(BASS_ChannelUpdate(_handle,length));
     }
     
-    EBassState Channel::GetState() const
+    State Channel::GetState() const
     {
-        return static_cast<EBassState>(BASS_ChannelIsActive(_handle));
+        return static_cast<State>(BASS_ChannelIsActive(_handle));
     }
     
-    std::size_t Channel::GetPosition(const EBassPos mode) const
+    std::size_t Channel::GetPosition(const Position mode) const
     {
         if (const auto size = BASS_ChannelGetPosition(_handle, static_cast<uint32_t>(mode)); size != -1)
         {
@@ -69,15 +69,15 @@ namespace bass
         return throwOrReturn(0);
     }
     
-    void Channel::SetPosition(const QWORD pos, const EBassPos mode) const
+    void Channel::SetPosition(const QWORD pos, const Position mode) const
     {
-        if (BASS_ChannelSetPosition(_handle, pos, mode) == FALSE)
+        if (BASS_ChannelSetPosition(_handle, pos, static_cast<DWORD>(mode)) == FALSE)
         {
             throwOrReturn(nullptr);
         }
     }
     
-    std::size_t Channel::GetLength(const EBassPos mode) const
+    std::size_t Channel::GetLength(const Position mode) const
     {
         if (const auto size = BASS_ChannelGetLength(_handle, static_cast<uint32_t>(mode)); size != -1)
         {
@@ -107,12 +107,12 @@ namespace bass
         return result;
     }
     
-    void Channel::SetAttribute(const EBassAttribute attribute, const float val) const
+    void Channel::SetAttribute(const Attribute attribute, const float val) const
     {
         return SetAttribute(static_cast<uint32_t>(attribute), val);
     }
     
-    float Channel::GetAttribute(const EBassAttribute attribute) const
+    float Channel::GetAttribute(const Attribute attribute) const
     {
         return GetAttribute(static_cast<uint32_t>(attribute));
     }
@@ -125,7 +125,7 @@ namespace bass
         }
     }
     
-    void Channel::SlideAttribute(const EBassAttribute attribute, const float val, const DWORD time) const
+    void Channel::SlideAttribute(const Attribute attribute, const float val, const DWORD time) const
     {
         SlideAttribute(static_cast<DWORD>(attribute), val, time);
     }
@@ -135,7 +135,7 @@ namespace bass
         return BASS_ChannelIsSliding(_handle, attribute) == TRUE;
     }
     
-    bool Channel::IsSlidingAttribute(const EBassAttribute attribute) const
+    bool Channel::IsSlidingAttribute(const Attribute attribute) const
     {
         return IsSlidingAttribute(static_cast<DWORD>(attribute));
     }
@@ -159,11 +159,11 @@ namespace bass
         }
     }
     
-    auto Channel::Set3DAttributes(const EBass3DMode mode, const float min, const float max, const int iAngle,
+    auto Channel::Set3DAttributes(const SpatialMode mode, const float min, const float max, const int iAngle,
                                   const int oAngle,
                                   const float oVolume) const -> void
     {
-        if (BASS_ChannelSet3DAttributes(_handle, mode, min, max, iAngle, oAngle, oVolume) == FALSE)
+        if (BASS_ChannelSet3DAttributes(_handle, static_cast<int>(mode), min, max, iAngle, oAngle, oVolume) == FALSE)
         {
             throwOrReturn(nullptr);
         }

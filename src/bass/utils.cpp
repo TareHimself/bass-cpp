@@ -5,93 +5,93 @@
 
 namespace bass
 {
-    std::string bassErrorToString(EBassError error)
+    std::string bassErrorToString(Error error)
     {
             switch (error)
             {
-            case ErrorOK:
+            case Error::OK:
                 return "All is OK, yet you saw this ?";
-            case ErrorMemory:
+            case Error::Memory:
                 return "Memory error";
-            case ErrorFileOpen:
+            case Error::FileOpen:
                 return "Can't open the file";
-            case ErrorDriver:
+            case Error::Driver:
                 return "Can't find a free/valid driver";
-            case ErrorBufferLost:
+            case Error::BufferLost:
                 return "The sample buffer was lost";
-            case ErrorHandle:
+            case Error::Handle:
                 return "Invalid handle";
-            case ErrorFormat:
+            case Error::Format:
                 return "Unsupported sample format";
-            case ErrorPosition:
+            case Error::Position:
                 return "Invalid position";
-            case ErrorInit:
+            case Error::Init:
                 return "BASS_Init has not been successfully called";
-            case ErrorStart:
+            case Error::Start:
                 return "BASS_Start has not been successfully called";
-            case ErrorSSL:
+            case Error::SSL:
                 return "SSL/HTTPS support isn't available";
-            case ErrorReinit:
+            case Error::Reinit:
                 return "Device needs to be reinitialized";
-            case ErrorAlready:
+            case Error::Already:
                 return "Already initialized/paused/whatever";
-            case ErrorNotAudio:
+            case Error::NotAudio:
                 return "File does not contain audio";
-            case ErrorNoChannel:
+            case Error::NoChannel:
                 return "Can't get a free channel";
-            case ErrorIllegalType:
+            case Error::IllegalType:
                 return "An illegal type was specified";
-            case ErrorIllegalParam:
+            case Error::IllegalParam:
                 return "An illegal parameter was specified";
-            case ErrorNo3D:
+            case Error::No3D:
                 return "No 3D support";
-            case ErrorNoEAX:
+            case Error::NoEAX:
                 return "No EAX support";
-            case ErrorDevice:
+            case Error::Device:
                 return "Illegal device number";
-            case ErrorNoPlay:
+            case Error::NoPlay:
                 return "Not playing";
-            case ErrorFrequency:
+            case Error::Frequency:
                 return "Illegal sample rate";
-            case ErrorNotFile:
+            case Error::NotFile:
                 return "The stream is not a file stream";
-            case ErrorNoHardware:
+            case Error::NoHardware:
                 return "No hardware voices available";
-            case ErrorEmpty:
+            case Error::Empty:
                 return "The file has no sample data";
-            case ErrorNoInternet:
+            case Error::NoInternet:
                 return "No internet connection could be opened";
-            case ErrorCreate:
+            case Error::Create:
                 return "Couldn't create the file";
-            case ErrorNoFX:
+            case Error::NoFX:
                 return "Effects are not available";
-            case ErrorNotAvailable:
+            case Error::NotAvailable:
                 return "Requested data/action is not available";
-            case ErrorDecode:
+            case Error::Decode:
                 return "The channel is/isn't a 'decoding channel'";
-            case ErrorDX:
+            case Error::DX:
                 return "A sufficient DirectX version is not installed";
-            case ErrorTimeout:
+            case Error::Timeout:
                 return "Connection timed out";
-            case ErrorFileFormat:
+            case Error::FileFormat:
                 return "Unsupported file format";
-            case ErrorSpeaker:
+            case Error::Speaker:
                 return "Unavailable speaker";
-            case ErrorVersion:
+            case Error::Version:
                 return "Invalid BASS version (used by add-ons)";
-            case ErrorCodec:
+            case Error::Codec:
                 return "Codec is not available/supported";
-            case ErrorEnded:
+            case Error::Ended:
                 return "The channel/file has ended";
-            case ErrorBusy:
+            case Error::Busy:
                 return "The device is busy";
-            case ErrorUnstreamable:
+            case Error::Unstreamable:
                 return "Unstreamable file";
-            case ErrorProtocol:
+            case Error::Protocol:
                 return "Unsupported protocol";
-            case ErrorDenied:
+            case Error::Denied:
                 return "Access denied";
-            case ErrorUnknown:
+            case Error::Unknown:
                 return "Some other mystery problem";
             }
     
